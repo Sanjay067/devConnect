@@ -196,14 +196,20 @@ export const getComments = asyncHandler(async (req, res) => {
   const post = await Post.findById(postId).select("commentCount");
   if (!post) return res.status(404).json({ message: "Post not found" });
 
+  const query = {
+    postId,
+    parentComment: null,
+    $or: [{ isDeleted: false }, { replyCount: { $gt: 0 } }],
+  };
+
   const [comments, total] = await Promise.all([
-    Comment.find({ postId, parentComment: null, isDeleted: false })
+    Comment.find(query)
       .populate("author", "name username profilePicture")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
       .lean(),
-    Comment.countDocuments({ postId, parentComment: null, isDeleted: false })
+    Comment.countDocuments(query)
   ]);
 
   const commentIds = comments.map((c) => c._id);
@@ -242,14 +248,19 @@ export const getReplies = asyncHandler(async (req, res) => {
   const limit = Math.min(50, Math.max(1, Number(req.query.limit || 20)));
   const skip = (page - 1) * limit;
 
+  const query = {
+    parentComment: commentId,
+    $or: [{ isDeleted: false }, { replyCount: { $gt: 0 } }],
+  };
+
   const [replies, total] = await Promise.all([
-    Comment.find({ parentComment: commentId, isDeleted: false })
+    Comment.find(query)
       .populate("author", "name username profilePicture")
       .sort({ createdAt: 1 })
       .skip(skip)
       .limit(limit)
       .lean(),
-    Comment.countDocuments({ parentComment: commentId, isDeleted: false })
+    Comment.countDocuments(query)
   ]);
 
   const replyIds = replies.map((r) => r._id);
