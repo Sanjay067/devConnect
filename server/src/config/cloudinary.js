@@ -68,17 +68,13 @@ const postMediaStorage = new CloudinaryStorage({
   },
 });
 
-// Storage for banners
-const bannerStorage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: "linkedin/banners",
-    allowed_formats: ["jpg", "jpeg", "png", "webp"],
-    transformation: [{ width: 1200, height: 300, crop: "fill" }],
-  },
+export const uploadAvatar = multer({ 
+  storage: avatarStorage,
+  limits: { fileSize: 1024 * 1024 } // 1MB limit
 });
 
-export const uploadAvatar = multer({ storage: avatarStorage });
-export const uploadBanner = multer({ storage: bannerStorage });
-export const uploadPostMedia = multer({ storage: postMediaStorage });
+export const uploadPostMedia = multer({ 
+  storage: postMediaStorage,
+  limits: { fileSize: 1024 * 1024 } // 1MB limit
+});
 export { cloudinary };

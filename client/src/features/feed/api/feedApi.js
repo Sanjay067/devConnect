@@ -1,16 +1,6 @@
-import * as authService from "@/services/authService";
+import * as feedService from "@/services/feedService";
 
-export const login = async (data) => {
-    const res = await authService.login(data);
-    return res.data;
-};
-
-export const register = async (data) => {
-    const res = await authService.register(data);
-    return res.data;
-};
-
-export const logout = async () => {
-    const res = await authService.logout();
+export const getFeed = async () => {
+    const res = await feedService.getFeed();
     return res.data;
 };

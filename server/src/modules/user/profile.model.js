@@ -35,10 +35,6 @@ const profileSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  bannerPicture: {
-    type: String,
-    default: "",
-  },
   headline: {
     type: String,
     default: "",

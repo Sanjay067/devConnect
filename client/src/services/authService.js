@@ -5,3 +5,6 @@ export const register = (data) => apiClient.post("/auth/signup", data);
 export const logout = () => apiClient.post("/auth/logout");
 export const refreshToken = () => apiClient.post("/auth/refresh-token");
 export const getCsrfToken = () => apiClient.get("/auth/csrf-token");
+
+//instant auth check
+export const getMyProfile = () => apiClient.get("/users/profiles/me");

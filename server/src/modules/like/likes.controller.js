@@ -40,7 +40,6 @@ export const getPostLikes = asyncHandler(async (req, res) => {
 export const toggleLikePost = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const postId = req.params.postId;
-
   if (!mongoose.Types.ObjectId.isValid(postId)) {
     return res.status(400).json({ message: "Invalid Post ID" });
   }
@@ -119,7 +118,7 @@ export const toggleLikeComment = asyncHandler(async (req, res) => {
   }
 
   const session = await mongoose.startSession();
-  
+
   let increment = 1;
   let comment = null;
 
