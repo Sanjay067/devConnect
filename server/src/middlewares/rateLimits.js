@@ -30,7 +30,7 @@ export const uploadLimiter = rateLimit({
 /** Limit for post rating actions */
 export const ratingLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: Number(process.env.RATING_RATE_LIMIT_MAX || 60),
+  max: Number(process.env.RATING_RATE_LIMIT_MAX || 30),
   standardHeaders: true,
   legacyHeaders: false,
   message: { message: "Too many rating actions, please slow down." },
